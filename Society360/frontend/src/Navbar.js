@@ -34,17 +34,17 @@ function Navbar() {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="" style={{marginLeft: "23rem"}}>
+              <Link class="nav-link active" aria-current="page" to="/" style={{marginLeft: "23rem"}}>
                 Home
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="">
+              <Link class="nav-link active" aria-current="page" to="/about">
                 About
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" to="">
+              <Link class="nav-link active" to="/contact">
                 Contact
               </Link>
             </li>
