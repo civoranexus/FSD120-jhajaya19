@@ -35,12 +35,12 @@ function Navbar() {
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="">
+              <Link class="nav-link active" aria-current="page" to="/visitors">
                 <i class="fa fa-user" aria-hidden="true"></i> Visitors
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" to="">
+              <Link class="nav-link active" to="/maintenance">
                 <i class="fa fa-wrench" aria-hidden="true"></i> Maintenance
               </Link>
             </li>
