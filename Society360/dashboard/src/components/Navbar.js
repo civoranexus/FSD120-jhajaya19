@@ -45,12 +45,12 @@ function Navbar() {
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" to="">
+              <Link class="nav-link active" to="/billing">
                 <i class="fa fa-credit-card" aria-hidden="true"></i> Billing
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link active" to="">
+              <Link class="nav-link active" to="/announcements">
                 <i class="fa fa-bell-o" aria-hidden="true"></i> Announcements
               </Link>
             </li>
