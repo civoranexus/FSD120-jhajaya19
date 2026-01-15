@@ -1,11 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
+import MaintenanceReq from "./MaintenanceReq";
 
 function Maintenance() {
+  const [isVisible, setIsVisible] = useState(false);
+  
+    const toggleVisibility = () => {
+      setIsVisible(!isVisible);
+    }
+
   return (
     <div className="container">
       <div className="row">
         <h1 style={{ fontWeight: "bold" }}>Maintenance & Complaints
-        <a class="btn btn-primary" href="" role="button" style={{marginLeft: "35rem"}}><i class="fa fa-plus text-white m-2" aria-hidden="true"></i> New Request</a>
+        <button class="btn btn-primary" href="" role="button" style={{marginLeft: "35rem"}} onClick={toggleVisibility}><i class="fa fa-plus text-white m-2" aria-hidden="true"></i>
+         {isVisible ? "Hide form" : "New Request"}
+         </button>
         </h1>
         <p className="mt-4 mb-5 fs-5 text-muted">
           Submit and track maintenance requests
@@ -22,6 +31,8 @@ function Maintenance() {
             aria-describedby="basic-addon1"
           />
         </div>
+
+        {isVisible && <MaintenanceReq setIsVisible={setIsVisible} />}
 
         <div className="row">
           <div className="row mb-4 mt-4">

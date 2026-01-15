@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const maintenanceSchema = new mongoose.Schema({
-  // Required fields only
+
   title: { type: String, required: true },
   description: { type: String, required: true },
   
-  // Basic enums
   category: { 
     type: String, 
     enum: ['plumbing', 'electrical', 'carpentry', 'other'],
@@ -24,17 +23,14 @@ const maintenanceSchema = new mongoose.Schema({
     default: 'pending'
   },
   
-  // References
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   unitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Unit', required: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   
-  // Simple timestamps
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Keep your code updated
 maintenanceSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();

@@ -1,11 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
+import PreApproveVisitor from "./PreApproveVisitor";
 
 function Visitors() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  }
+
   return (
     <div className="container">
       <div className="row">
         <h1 style={{ fontWeight: "bold" }}>Visitor Management
-        <a class="btn btn-primary" href="" role="button" style={{marginLeft: "43rem"}}><i class="fa fa-user-o text-white m-2" aria-hidden="true"></i> Pre-approve Visitor</a>
+        <button class="btn btn-primary" href="" role="button" style={{marginLeft: "43rem"}} onClick={toggleVisibility}><i class="fa fa-user-o text-white m-2" aria-hidden="true"></i>
+         {isVisible ? "Hide form" : "Pre Approve Visitor"}</button>
         </h1>
         <p className="mt-4 mb-5 fs-5 text-muted">
           Pre-approve and track visitor entry/exit
@@ -23,6 +31,8 @@ function Visitors() {
             aria-describedby="basic-addon1"
           />
         </div>
+
+        {isVisible && <PreApproveVisitor setIsVisible={setIsVisible} />}
 
         <div className="row">
           <div className="row mb-4 mt-4">
