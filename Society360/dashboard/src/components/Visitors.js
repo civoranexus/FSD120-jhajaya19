@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import PreApproveVisitor from "./PreApproveVisitor";
+import {dummyVisitors} from  "../data/data"
 
 function Visitors() {
   const [isVisible, setIsVisible] = useState(false);

@@ -29,6 +29,11 @@ const visitorSchema = new mongoose.Schema({
     enum: ['pending', 'approved', 'rejected', 'checked_in', 'checked_out'],
     default: 'pending'
   },
+
+  unitId: {
+    type: String,
+    required: true
+  },
   
   actualEntryTime: Date,
   actualExitTime: Date,
