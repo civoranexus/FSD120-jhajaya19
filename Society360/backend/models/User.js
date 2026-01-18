@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  unitId: {
+    // type: mongoose.Schema.Types.ObjectId,
+    type: String,
+    ref: 'Unit'
+  },
 });
 
 userSchema.pre("save", async function () {
