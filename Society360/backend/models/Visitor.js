@@ -30,6 +30,12 @@ const visitorSchema = new mongoose.Schema({
     default: 'pending'
   },
 
+  residentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+
   unitId: {
     type: String,
     required: true

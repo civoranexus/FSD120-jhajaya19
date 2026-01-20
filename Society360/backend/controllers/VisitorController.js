@@ -4,10 +4,13 @@ const createVisitor = async (req, res) => {
     const { visitorName, visitorPhone, purpose, expectedEntryTime } = req.body;
 
     const userId = req.user._id;
-    const userUnitId = req.user.unitId; 
+    const userUnitId = req.user.unitId;
+    
+    console.log('Creating visitor - userId:', userId, 'unitId:', userUnitId);
     
     if (!userUnitId) {
-      return res.status(400).json({ message: 'User is not assigned to any unit' });
+      console.error('User not assigned to any unit:', userId);
+      return res.status(400).json({ message: 'User is not assigned to any unit. Please update your profile with your unit information.' });
     }
 
     const visitor = await Visitor.create({
@@ -20,13 +23,14 @@ const createVisitor = async (req, res) => {
       status: 'pending'
     });
 
+    console.log('Visitor created successfully:', visitor._id);
     res.status(201).json({
       message: 'Visitor request created successfully',
       visitor
     });
   } catch (error) {
-    console.error('Create visitor error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Create visitor error:', error.message);
+    res.status(500).json({ message: `Server error: ${error.message}` });
   }
 };
 
@@ -54,6 +58,23 @@ const getTodayVisitors = async (req, res) => {
     });
   } catch (error) {
     console.error('Get today visitors error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getAllVisitors = async (req, res) => {
+  try {
+    const visitors = await Visitor.find()
+      .sort({ expectedEntryTime: -1 })
+      .populate('residentId', 'name unitNumber email')
+      .limit(100);
+
+    res.json({
+      count: visitors.length,
+      visitors
+    });
+  } catch (error) {
+    console.error('Get all visitors error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -99,5 +120,6 @@ const updateVisitorStatus = async (req, res) => {
 module.exports = {
   createVisitor,
   getTodayVisitors,
+  getAllVisitors,
   updateVisitorStatus
 };

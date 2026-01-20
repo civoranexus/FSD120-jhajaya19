@@ -4,6 +4,7 @@ const { protect } = require('../middlewares/AuthMiddleware');
 const {
   createVisitor,
   getTodayVisitors,
+  getAllVisitors,
   updateVisitorStatus
 } = require('../controllers/VisitorController');
 
@@ -16,5 +17,6 @@ router.put('/:id/status', updateVisitorStatus);
 
 // Staff/Admin routes
 router.get('/today', getTodayVisitors);
+router.get('/', getAllVisitors);
 
 module.exports = router;

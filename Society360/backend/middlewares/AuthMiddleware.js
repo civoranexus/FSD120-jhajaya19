@@ -19,21 +19,45 @@ module.exports.userVerification = (req, res) => {
 }
 
 module.exports.protect = async (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+  let token = req.cookies.token;
+  
+  console.log('=== Auth Middleware Debug ===');
+  console.log('Cookies:', req.cookies);
+  console.log('Authorization header:', req.headers.authorization);
+  
+  // Check Authorization header if token not in cookies
+  if (!token && req.headers.authorization) {
+    const authHeader = req.headers.authorization;
+    if (authHeader.startsWith('Bearer ')) {
+      token = authHeader.slice(7);
+      console.log('Token found in Authorization header');
+    }
   }
+  
+  if (!token) {
+    console.log('No token found!');
+    return res.status(401).json({ message: 'Unauthorized - No token provided' });
+  }
+  
+  console.log('Token found:', token.substring(0, 20) + '...');
+  
   jwt.verify(token, process.env.TOKEN_KEY, async (err, decoded) => {
     if (err) {
+      console.log('JWT verification error:', err.message);
       return res.status(401).json({ message: 'Invalid token' });
     }
     const user = await User.findById(decoded.id);
     if (!user) {
+      console.log('User not found with id:', decoded.id);
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log('User authenticated:', user.email, 'unitId:', user.unitId);
     req.user = {
-      ...decoded,
+      _id: user._id,
+      id: user._id,
       unitId: user.unitId,
+      email: user.email,
+      username: user.username
     };
     next();
   });

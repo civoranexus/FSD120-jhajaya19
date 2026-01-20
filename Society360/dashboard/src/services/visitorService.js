@@ -11,6 +11,17 @@ export const createVisitor = async (visitorData) => {
   }
 };
 
+// Get all visitors
+export const getAllVisitors = async () => {
+  try {
+    const response = await api.get('/visitors');
+    return response.data;
+  } catch (error) {
+    console.error('Get all visitors error:', error);
+    throw error;
+  }
+};
+
 // Get today's visitors (staff only)
 export const getTodayVisitors = async () => {
   try {

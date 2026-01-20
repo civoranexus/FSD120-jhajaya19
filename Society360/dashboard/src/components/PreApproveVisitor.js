@@ -7,8 +7,9 @@ function PreApproveVisitor({setIsVisible , onSuccess}) {
     visitorPhone: '',
     purpose: 'personal',
     expectedEntryTime: '',
-    unitId: '',
   });
+
+  const [validated, setValidated] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,24 +23,44 @@ function PreApproveVisitor({setIsVisible , onSuccess}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formData.visitorName.trim()) {
+      setError('Visitor name is required');
+      return;
+    }
+    if (!formData.visitorPhone.trim()) {
+      setError('Phone number is required');
+      return;
+    }
+    if (!formData.expectedEntryTime) {
+      setError('Expected entry time is required');
+      return;
+    }
+    
     setLoading(true);
     setError('');
+    setValidated(true);
 
     try {
-      await createVisitor(formData);
+      const response = await createVisitor(formData);
+      console.log('Visitor created successfully:', response);
+      
       // Reset form
       setFormData({
         visitorName: '',
         visitorPhone: '',
         purpose: 'personal',
         expectedEntryTime: '',
-        unitId: '',
       });
+      setValidated(false);
       
       if (onSuccess) onSuccess();
       alert('Visitor request submitted successfully!');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to submit visitor request');
+      const errorMsg = err.response?.data?.message || err.message || 'Failed to submit visitor request';
+      console.error('Full error:', err);
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -59,63 +80,64 @@ function PreApproveVisitor({setIsVisible , onSuccess}) {
         {error && <div className="alert alert-error">{error}</div>}
       <form className="row" onSubmit={handleSubmit}>
         <div className="mb-3 col-6">
-          <label for="exampleInputVisitor1" className="form-label">
-            Visitor Name
+          <label htmlFor="visitorName" className="form-label">
+            Visitor Name *
           </label>
           <input
             type="text"
             name="visitorName"
+            value={formData.visitorName}
             className="form-control"
-            id="exampleInputVisitor1"
+            id="visitorName"
+            placeholder="Enter visitor name"
             onChange={handleChange}
+            required
           />
         </div>
-        <div class="mb-3 col-6">
-          <label for="phone" class="form-label">
-            Phone Number
+        <div className="mb-3 col-6">
+          <label htmlFor="phone" className="form-label">
+            Phone Number *
           </label>
           <input
             type="tel"
             name="visitorPhone"
-            class="form-control"
+            value={formData.visitorPhone}
+            className="form-control"
             id="phone"
+            placeholder="Enter phone number"
             onChange={handleChange}
+            required
           />
         </div>
-        <div class="mb-3 col-6">
-          <label for="purpose" class="form-label">
+        <div className="mb-3 col-6">
+          <label htmlFor="purpose" className="form-label">
             Purpose of Visit
           </label>
-          <input
-            type="text"
+          <select
             name="purpose"
-            class="form-control"
+            value={formData.purpose}
+            className="form-control"
             id="purpose"
             onChange={handleChange}
-          />
+          >
+            <option value="personal">Personal</option>
+            <option value="delivery">Delivery</option>
+            <option value="service">Service</option>
+            <option value="guest">Guest</option>
+          </select>
         </div>
-        <div class="mb-3 col-6">
-          <label for="unit-no" class="form-label">
-            Unit Number
-          </label>
+        <div className="mb-3 col-6">
+          <label htmlFor="expectedEntryTime">Expected Entry Time *</label>
           <input
-            type="text"
-            name="unitId"
-            class="form-control"
-            id="unit-no"
+            type="datetime-local"
+            name="expectedEntryTime"
+            id="expectedEntryTime"
+            value={formData.expectedEntryTime || getDefaultTime()}
+            className="form-control"
             onChange={handleChange}
+            required
           />
         </div>
-          <div className="mb-3 col-6">
-            <label>Expected Entry Time *</label>
-            <input
-              type="datetime-local"
-              name="expectedEntryTime"
-              value={formData.expectedEntryTime || getDefaultTime()}
-              onChange={handleChange}
-              required
-            />
-          </div>
         <div className="row">
         <button type="submit" className="btn btn-primary col-auto mx-3">
           {loading ? 'Submitting...' : 'Submit Request'}
