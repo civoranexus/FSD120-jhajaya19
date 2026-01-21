@@ -22,6 +22,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/", authRoute);
 app.use('/api/visitors', require('./routes/VisitorRoute'));
+app.use('/api/maintenance', require('./routes/MaintenanceRoute'));
 
 app.listen(PORT, () => {
     console.log("App started");
