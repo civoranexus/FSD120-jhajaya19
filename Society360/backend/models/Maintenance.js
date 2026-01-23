@@ -23,17 +23,17 @@ const maintenanceSchema = new mongoose.Schema({
     default: 'pending'
   },
   
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  unitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Unit', required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  unitId: { type: String, ref: 'Unit', required: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
 
-maintenanceSchema.pre('save', function(next) {
-  this.updatedAt = Date.now();
-  next();
-});
+// maintenanceSchema.pre('save', function(next) {
+//   this.updatedAt = Date.now();
+//   next();
+// });
 
 module.exports = mongoose.model('Maintenance', maintenanceSchema);
