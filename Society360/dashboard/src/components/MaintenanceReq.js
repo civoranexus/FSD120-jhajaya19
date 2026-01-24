@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { createMaintenance } from "../services/maintenanceService";
 
 function MaintenanceReq({ onMaintenanceCreated }) {
   const [formData, setFormData] = useState({
@@ -29,8 +30,8 @@ function MaintenanceReq({ onMaintenanceCreated }) {
    const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      ...formData
-      // [name]: name === 'estimatedCost' ? parseFloat(value) || '' : value
+      ...formData,
+      [name]: value
     });
   };
 
@@ -65,28 +66,42 @@ function MaintenanceReq({ onMaintenanceCreated }) {
     <div className="container border p-2 my-4" style={{ borderRadius: "1rem" }}>
       <div className="row p-4">
         <h3 className="mb-4">Submit Maintenance Request</h3>
-        <form className="row">
+
+        {error && (
+          <div>{error}</div>
+        )}
+      
+        {success && (
+          <div>{success}</div>
+        )}
+
+        <form className="row" onSubmit={handleSubmit}>
           <div className="mb-3 col-6">
             <label for="exampleInputVisitor1" className="form-label">
               Issue Title
             </label>
             <input
               type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
               className="form-control"
               id="exampleInputVisitor1"
             />
           </div>
-          <div class="mb-3 col-6">
-            <label for="phone" class="form-label">
+          <div className="mb-3 col-6">
+            <label for="unit-no" class="form-label" >
               Unit Number
             </label>
-            <input type="text" class="form-control" id="phone" />
+            <input type="text" class="form-control" id="unit-no" name="unitId" value={formData.unitId} onChange={handleChange}/>
           </div>
-          <div class="mb-3 col-6">
-            <label for="purpose" class="form-label">
+          <div className="mb-3 col-6">
+            <label for="category" class="form-label" >
               Category
             </label>
-            <select class="form-select" aria-label="Default select example">
+            <select className="form-select" aria-label="Default select example" name="category"
+            value={formData.category}
+            onChange={handleChange}>
               <option value="1" selected>
                 Plumbing
               </option>
@@ -96,10 +111,10 @@ function MaintenanceReq({ onMaintenanceCreated }) {
             </select>
           </div>
           <div class="mb-3 col-6">
-            <label for="unit-no" class="form-label">
-              Priorty
+            <label for="unit-no" class="form-label" name="priority">
+              Priority
             </label>
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" value={formData.priority} onChange={handleChange}>
               <option value="1">Low</option>
               <option value="2" selected>
                 Medium
@@ -115,10 +130,11 @@ function MaintenanceReq({ onMaintenanceCreated }) {
               class="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
+              name="description" value={formData.description} onChange={handleChange}
             ></textarea>
           </div>
           <button type="submit" className="btn btn-primary col-auto mx-3">
-            Submit Request
+            {loading ? 'Submitting...' : 'Submit Request'}
           </button>
           <button
             type="button"

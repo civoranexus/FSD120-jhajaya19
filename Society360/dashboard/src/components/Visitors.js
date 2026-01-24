@@ -47,7 +47,7 @@ function Visitors() {
       minute: '2-digit'
     });
   };
-
+ 
   const getStatusBadgeClass = (status) => {
     switch(status) {
       case 'pending': return 'text-bg-warning';
