@@ -61,7 +61,7 @@ function Visitors() {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="row"> 
         <h1 style={{ fontWeight: "bold" }}>
           Visitor Management
           <button

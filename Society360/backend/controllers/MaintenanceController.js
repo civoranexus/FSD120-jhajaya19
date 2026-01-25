@@ -20,7 +20,7 @@ const createMaintenance = async (req, res) => {
       category: category || 'other',
       priority: priority || 'medium',
       status: 'pending',
-      createdBy,
+      userId: createdBy,
       unitId,
     });
 
@@ -41,15 +41,13 @@ const createMaintenance = async (req, res) => {
 
 const getAllMaintenance = async (req, res) => {
   try {
-    if (!['staff', 'admin'].includes(req.user.role)) {
-      return res.status(403).json({ 
-        success: false, 
-        message: 'Not authorized' 
-      });
-    }
-
     const { status, priority, category } = req.query;
     const filter = {};
+
+    // If not staff/admin, only show requests from their unit
+    if (!['staff', 'admin'].includes(req.user.role)) {
+      filter.unitId = req.user.unitId;
+    }
 
     if (status) filter.status = status;
     if (priority) filter.priority = priority;
@@ -57,7 +55,7 @@ const getAllMaintenance = async (req, res) => {
 
     const maintenance = await Maintenance.find(filter)
       .sort({ priority: -1, createdAt: -1 })
-      .populate('createdBy', 'name unitId phone')
+      .populate('userId', 'name unitId phone')
       .populate('assignedTo', 'name email');
 
     res.json({

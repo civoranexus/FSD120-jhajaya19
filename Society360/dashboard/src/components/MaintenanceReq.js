@@ -90,44 +90,45 @@ function MaintenanceReq({ onMaintenanceCreated }) {
             />
           </div>
           <div className="mb-3 col-6">
-            <label for="unit-no" class="form-label" >
+            <label for="unit-no" className="form-label" >
               Unit Number
             </label>
-            <input type="text" class="form-control" id="unit-no" name="unitId" value={formData.unitId} onChange={handleChange}/>
+            <input type="text" className="form-control" id="unit-no" name="unitId" value={formData.unitId} onChange={handleChange}/>
           </div>
           <div className="mb-3 col-6">
-            <label for="category" class="form-label" >
+            <label for="category" className="form-label" >
               Category
             </label>
             <select className="form-select" aria-label="Default select example" name="category"
             value={formData.category}
             onChange={handleChange}>
-              <option value="1" selected>
+              <option value="plumbing">
                 Plumbing
               </option>
-              <option value="2">Electrical</option>
-              <option value="3">Cleaning</option>
-              <option value="4">Other</option>
+              <option value="electrical">Electrical</option>
+              <option value="carpentry">Carpentry</option>
+              <option value="other">Other</option>
             </select>
           </div>
-          <div class="mb-3 col-6">
-            <label for="unit-no" class="form-label" name="priority">
+          <div className="mb-3 col-6">
+            <label for="priority" className="form-label">
               Priority
             </label>
-            <select class="form-select" aria-label="Default select example" value={formData.priority} onChange={handleChange}>
-              <option value="1">Low</option>
-              <option value="2" selected>
+            <select className="form-select" aria-label="Default select example" name="priority" value={formData.priority} onChange={handleChange}>
+              <option value="low">Low</option>
+              <option value="medium">
                 Medium
               </option>
-              <option value="3">High</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">
+          <div className="mb-3">
+            <label for="exampleFormControlTextarea1" className="form-label">
               Description
             </label>
             <textarea
-              class="form-control"
+              className="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
               name="description" value={formData.description} onChange={handleChange}
@@ -138,7 +139,7 @@ function MaintenanceReq({ onMaintenanceCreated }) {
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary col-auto"
+            className="btn btn-outline-primary col-auto"
             disabled
           >
             Cancel
