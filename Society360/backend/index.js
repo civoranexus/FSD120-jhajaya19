@@ -24,6 +24,9 @@ app.use("/", authRoute);
 app.use('/api/visitors', require('./routes/VisitorRoute'));
 app.use('/api/maintenance', require('./routes/MaintenanceRoute'));
 
+app.use('/api/admin', require('./routes/AdminRoute'));
+app.use('/api/auth', require('./routes/AuthRoute'));
+
 app.listen(PORT, () => {
     console.log("App started");
     mongoose.connect(uri);
