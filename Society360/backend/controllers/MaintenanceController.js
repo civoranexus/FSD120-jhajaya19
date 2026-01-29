@@ -2,6 +2,13 @@ const Maintenance = require('../models/Maintenance');
 
 const createMaintenance = async (req, res) => {
   try {
+    if (req.user.role !== 'resident') {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Only residents can submit maintenance requests' 
+      });
+    }
+
     const { title, description, category, priority } = req.body;
     
     const createdBy = req.user._id;
@@ -111,6 +118,12 @@ const getAllMaintenance = async (req, res) => {
 
 const updateMaintenance = async (req, res) => {
   try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Only admin can update maintenance' 
+      });
+    }
     // Only staff/admin can update
     if (!['staff', 'admin'].includes(req.user.role)) {
       return res.status(403).json({ 

@@ -1,6 +1,13 @@
 const Visitor = require('../models/Visitor');
 const createVisitor = async (req, res) => {
   try {
+    if (req.user.role !== 'resident') {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Only residents can submit visitor requests' 
+      });
+    }
+
     const { visitorName, visitorPhone, purpose, expectedEntryTime } = req.body;
 
     const userId = req.user._id;
@@ -14,6 +21,7 @@ const createVisitor = async (req, res) => {
     }
 
     const visitor = await Visitor.create({
+      ...req.body,
       visitorName,
       visitorPhone,
       purpose: purpose || 'personal',
@@ -82,6 +90,13 @@ const getAllVisitors = async (req, res) => {
 //  Update visitor status (approve/reject)
 const updateVisitorStatus = async (req, res) => {
   try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Only admin can approve visitors' 
+      });
+    }
+    
     const { status } = req.body;
     const visitorId = req.params.id;
     const userId = req.user._id;

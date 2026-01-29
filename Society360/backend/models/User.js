@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Your password is required"],
   },
+  role: {
+    type: String,
+    enum: ['resident', 'admin'], 
+    default: 'resident'
+  },
   createdAt: {
     type: Date,
     default: new Date(),
@@ -24,6 +29,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     ref: 'Unit'
   },
+  lastLogin: Date,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 userSchema.pre("save", async function () {
