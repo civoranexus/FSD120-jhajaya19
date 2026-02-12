@@ -10,7 +10,7 @@ function Navbar() {
     localStorage.removeItem('user');
     
     // Redirect to external URL
-    window.location.href = 'http://localhost:3001';
+    window.location.href = 'https://society360-frontend.onrender.com';
   };
 
   return (

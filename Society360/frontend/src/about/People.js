@@ -12,7 +12,7 @@ function People() {
       >
         <div className="col-5 p-5  text-center mt-4">
           <img
-            src="images\logos\Long_logo.png"
+            src="images/logos/Long_logo.png"
             style={{ border: "2px solid black" , width: "80%" }} className="p-4"
           />
         </div>

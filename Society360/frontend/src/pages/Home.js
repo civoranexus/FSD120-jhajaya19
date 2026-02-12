@@ -15,7 +15,7 @@ const Home = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "http://localhost:3005/verify",
+        "https://society360-backend-9pdk.onrender.com/verify",
         {},
         { withCredentials: true }
       );

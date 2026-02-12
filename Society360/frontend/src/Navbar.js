@@ -78,7 +78,7 @@ function Navbar() {
                 <Link class="dropdown-item" to="/login">
                   Resident Login
                 </Link>
-                <Link class="dropdown-item" to="http://localhost:3000/admin/login">
+                <Link class="dropdown-item" to="https://society360-dashboard.onrender.com/admin/login">
                   Admin Login
                 </Link>
               </div>

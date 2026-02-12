@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3005/login",
+        "https://society360-backend-9pdk.onrender.com/login",
         {
           ...inputValue,
         },
@@ -48,7 +48,7 @@ const Login = () => {
         // }, 1000);
         if (token) {
           localStorage.setItem("token", token); 
-          window.location.href = `http://localhost:3000?token=${token}`; 
+          window.location.href = `https://society360-dashboard.onrender.com?token=${token}`; 
         }  
       } else {
         handleError(message);

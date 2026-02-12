@@ -107,7 +107,7 @@ const AdminDashboard = () => {
           <ActionButton 
             icon={<Bell size={20} />}
             label="Create Announcement"
-            link="/admin/announcements/new"
+            link="/admin/announcements"
           />
           {/* <ActionButton 
             icon={<Users size={20} />}

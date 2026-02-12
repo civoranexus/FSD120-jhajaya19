@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3005/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://society360-backend-9pdk.onrender.com/api';
 
 // Create axios instance
 const api = axios.create({
