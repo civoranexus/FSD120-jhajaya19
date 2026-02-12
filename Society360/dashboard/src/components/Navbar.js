@@ -1,7 +1,18 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear token and user data from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Redirect to external URL
+    window.location.href = 'http://localhost:3001';
+  };
+
   return (
     <nav
       class="navbar navbar-expand-lg border-bottom"
@@ -56,7 +67,14 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-dark"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+        <button 
+          type="button" 
+          class="btn btn-outline-dark"
+          onClick={handleLogout}
+          style={{ cursor: 'pointer' }}
+        >
+          <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+        </button>
       </div>
     </nav>
   );

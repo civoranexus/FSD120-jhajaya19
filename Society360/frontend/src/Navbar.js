@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -12,12 +12,12 @@ function Navbar() {
           <img
             src="images\favicons\favicon-96x96.png"
             alt="Logo"
-            style={{width: "10%"}}
+            style={{ width: "10%" }}
           />
           <img
             src="images\logos\Long_logo.png"
             alt="Logo"
-            style={{width: "23%"}}
+            style={{ width: "23%" }}
           />
         </Link>
         <button
@@ -34,7 +34,12 @@ function Navbar() {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="/" style={{marginLeft: "23rem"}}>
+              <Link
+                class="nav-link active"
+                aria-current="page"
+                to="/"
+                style={{ marginLeft: "23rem" }}
+              >
                 Home
               </Link>
             </li>
@@ -53,10 +58,30 @@ function Navbar() {
                 Signup
               </Link>
             </li>
-            <li class="nav-item">
+            {/* <li class="nav-item">
               <Link class="nav-link active" to="/login">
                 Login
               </Link>
+            </li> */}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ cursor: "pointer" }}
+              >
+                Login
+              </a>
+              <div class="dropdown-menu">
+                <Link class="dropdown-item" to="/login">
+                  Resident Login
+                </Link>
+                <Link class="dropdown-item" to="http://localhost:3000/admin/login">
+                  Admin Login
+                </Link>
+              </div>
             </li>
           </ul>
         </div>

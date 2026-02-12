@@ -91,7 +91,7 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
-// ======== USER MANAGEMENT =========
+// ======== USER MANAGEMENT ========= 
 const getAllUsers = async (req, res) => {
   try {
     if (req.user.role !== 'admin') {
@@ -229,7 +229,7 @@ const getAllMaintenance = async (req, res) => {
     if (priority) filter.priority = priority;
 
     const maintenance = await Maintenance.find(filter)
-      .populate('createdBy', 'name unitId phone')
+      .populate('userId', 'name unitId phone')
       .sort({ priority: -1, createdAt: -1 });
 
     res.json({ success: true, count: maintenance.length, data: maintenance });
@@ -297,7 +297,6 @@ const getAllVisitors = async (req, res) => {
 
     const visitors = await Visitor.find(filter)
       .populate('residentId', 'name unitId phone')
-      .populate('approvedByAdminId', 'name')
       .sort({ expectedEntryTime: -1 });
 
     res.json({ success: true, count: visitors.length, data: visitors });
@@ -497,7 +496,46 @@ const createAnnouncement = async (req, res) => {
   }
 };
 
+const getAnnouncements = async (req, res) => {
+  try {
+    const announcements = await Announcement.find({ isActive: true })
+      .populate('postedBy', 'name email')
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      data: announcements
+    });
+  } catch (error) {
+    console.error('Get announcements error:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
 // =========== BILLING MANAGEMENT ===========
+const getAllBilling = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Admin access required' });
+    }
+
+    const { status } = req.query;
+    const filter = {};
+    
+    if (status) filter.status = status;
+
+    const bills = await Billing.find(filter)
+      .populate('userId', 'name email phone')
+      .populate('unitId', 'unitNumber building')
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, count: bills.length, data: bills });
+  } catch (error) {
+    console.error('Get billing error:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
 const generateBills = async (req, res) => {
   try {
     if (req.user.role !== 'admin') {
@@ -565,7 +603,9 @@ module.exports = {
   
   // Announcement Management
   createAnnouncement,
+  getAnnouncements,
   
   // Billing Management
+  getAllBilling,
   generateBills
 };

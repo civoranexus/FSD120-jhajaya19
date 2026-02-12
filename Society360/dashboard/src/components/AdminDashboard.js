@@ -3,7 +3,7 @@ import {
   Users, Home, UserCheck, Wrench, 
   DollarSign, AlertCircle, Bell, Calendar 
 } from 'lucide-react';
-import { getDashboardStats } from '../../services/adminService';
+import { getDashboardStats } from '../services/AdminService';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
 
       {/* Stats Grid */}
       <div style={styles.statsGrid}>
-        <StatCard 
+        {/* <StatCard 
           icon={<Users size={24} />}
           title="Total Residents"
           value={stats?.stats.totalResidents || 0}
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
           subValue={`${stats?.stats.occupancyRate || 0}% occupied`}
           color="#38a169"
           link="/admin/units"
-        />
+        /> */}
         
         <StatCard 
           icon={<UserCheck size={24} />}
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
             label="Create Announcement"
             link="/admin/announcements/new"
           />
-          <ActionButton 
+          {/* <ActionButton 
             icon={<Users size={20} />}
             label="Add New Resident"
             link="/admin/users/new"
@@ -118,7 +118,7 @@ const AdminDashboard = () => {
             icon={<Home size={20} />}
             label="Add New Unit"
             link="/admin/units/new"
-          />
+          /> */}
           <ActionButton 
             icon={<DollarSign size={20} />}
             label="Generate Bills"

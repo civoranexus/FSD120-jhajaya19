@@ -143,7 +143,26 @@ export const createAnnouncement = async (announcementData) => {
   }
 };
 
+export const getAnnouncements = async () => {
+  try {
+    const response = await api.get('/admin/announcements');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Network error' };
+  }
+};
+
 // Billing Management
+export const getAllBilling = async (filters = {}) => {
+  try {
+    const params = new URLSearchParams(filters).toString();
+    const response = await api.get(`/admin/bills${params ? `?${params}` : ''}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Network error' };
+  }
+};
+
 export const generateBills = async (billData) => {
   try {
     const response = await api.post('/admin/bills/generate', billData);

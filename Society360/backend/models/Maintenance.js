@@ -24,8 +24,13 @@ const maintenanceSchema = new mongoose.Schema({
   },
   
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   unitId: { type: String, ref: 'Unit', required: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  
+  adminNotes: String,
+  actualCost: Number,
+  completedAt: Date,
   
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

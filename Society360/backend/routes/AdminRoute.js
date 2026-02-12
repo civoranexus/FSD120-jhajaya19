@@ -22,7 +22,9 @@ const {
   createUnit,
   
   createAnnouncement,
+  getAnnouncements,
   
+  getAllBilling,
   generateBills
 } = require('../controllers/AdminController');
 
@@ -54,9 +56,11 @@ router.get('/units', getAllUnits);
 router.post('/units', createUnit);
 
 // ======= ANNOUNCEMENT MANAGEMENT =======
+router.get('/announcements', getAnnouncements);
 router.post('/announcements', createAnnouncement);
 
 // ========= BILLING MANAGEMENT ========
+router.get('/bills', getAllBilling);
 router.post('/bills/generate', generateBills);
 
 module.exports = router;
