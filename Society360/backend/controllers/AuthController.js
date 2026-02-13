@@ -13,7 +13,10 @@ module.exports.Signup = async (req, res, next) => {
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000
     });
     res
       .status(201)
@@ -41,7 +44,10 @@ module.exports.Login = async (req, res, next) => {
      const token = createSecretToken(user._id);
      res.cookie("token", token, {
        withCredentials: true,
-       httpOnly: false,
+       httpOnly: true,
+       secure: process.env.NODE_ENV === 'production', 
+       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+       maxAge: 24 * 60 * 60 * 1000
      });
      res.status(201).json({ message: "User logged in successfully", success: true, token });
      next()
@@ -82,7 +88,10 @@ module.exports.AdminLogin = async (req, res, next) => {
     const token = createSecretToken(admin._id);
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000
     });
 
     res.status(200).json({ 
