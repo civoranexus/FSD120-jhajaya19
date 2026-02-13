@@ -1,0 +1,34 @@
+require("dotenv").config();
+
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const authRoute = require("./routes/AuthRoute");
+
+const PORT = process.env.PORT || 3005;
+const uri = process.env.MONGO_URL;
+
+const app = express();
+
+app.use(
+  cors({
+    origin: ["https://society360-frontend.onrender.com", "https://society360-dashboard.onrender.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+app.use(cookieParser());
+app.use(express.json());
+app.use("/", authRoute);
+app.use('/api/visitors', require('./routes/VisitorRoute'));
+app.use('/api/maintenance', require('./routes/MaintenanceRoute'));
+
+app.use('/api/admin', require('./routes/AdminRoute'));
+app.use('/api/auth', require('./routes/AuthRoute'));
+
+app.listen(PORT, () => {
+    console.log("App started");
+    mongoose.connect(uri);
+    console.log("DB connected");
+});
